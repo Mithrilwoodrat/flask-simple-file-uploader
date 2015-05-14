@@ -1,0 +1,33 @@
+<html>
+  <body>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/jquery/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="static/js/vendor/jquery.ui.widget.js"></script>
+    <script src="static/js/jquery.iframe-transport.js"></script>
+    <script src="static/js/jquery.fileupload.js"></script>
+    <button id="uploadbtn"  type="button" class="btn btn-default" onclick="$('#fileupload').click()">点击上传</button>
+    <input id="fileupload" type="file" style="display: none;" name="file" data-url="/upload/" multiple>
+    <input id="filename" style="display: none;">
+    <label id="uploadresult"></label>
+    <script>
+        $(function () {
+            $('#fileupload').fileupload({
+                dataType: 'json',
+                done: function (e, data) {
+                    console.log(data.result);
+                    uploader = $('#fileupload');
+                    if (data.result.status == 'SUCCESS'){
+                        $('#uploadresult').text(data.result.status);
+                        $('#uploadbtn').text(data.result.filename);
+                        $('#filename').val(data.result.filename);
+                    }
+                    else{
+                        $('#uploadresult').text(data.result.error);
+                    }
+                }
+            });
+        });
+    </script>
+  </body>
+</html>
